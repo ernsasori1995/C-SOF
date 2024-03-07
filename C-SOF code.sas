@@ -1,5 +1,6 @@
-libname ptephwk "C:\Users\HP\OneDrive\Desktop\EP 850\person-time homework";
+libname ptephwk "C:\Users\HP\OneDrive\Desktop\EP 850\person-time project";
 
+/*sorting each file by id*/
 proc sort data= ptephwk.cgsof_t1; by id; run;
 proc sort data= ptephwk.cgsof_t2; by id; run;
 proc sort data= ptephwk.cgsof_t3; by id; run;
@@ -7,6 +8,7 @@ proc sort data= ptephwk.cgsof_t4; by id; run;
 proc sort data= ptephwk.cgsof_t5; by id; run;
 proc sort data= ptephwk.cgsof_end; by id; run;
 
+/*preparing analytic dataset by merging and relevant data manipulation techniques*/
 data pteplong;
 	merge ptephwk.cgsof_t1 ptephwk.cgsof_t2 ptephwk.cgsof_t3 ptephwk.cgsof_t4 ptephwk.cgsof_t5 ptephwk.cgsof_end;
 	by id;
@@ -105,7 +107,7 @@ data pteplong1; set pteplong ;
 		if time > diedtermbefore then delete; *remove extra rows for people who died/terminated before interview;
 	end;
 
-	*In the homework, this death_now variable is described as "dichotomous death indicator variable which is
+	* this death_now variable is described as "dichotomous death indicator variable which is
 	1= died at current age 
 	0= did not die at current age";
 	if death=1 then do;
@@ -173,7 +175,7 @@ proc freq data=pteplong1;
 	 where time = 1;
 run;
 
-/* creating table 1 for homework*/
+/* creating table 1*/
 
 proc freq data= pteplong1;
  tables (race2 educ2 married high_dep high_stress) * allcg / norow nopercent nocum missing ;
